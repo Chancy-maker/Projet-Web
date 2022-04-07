@@ -1,5 +1,10 @@
 "use strict"
 
+/**
+ * Utiliser infor.change pour les insertion, suppremssion et modification avec .run()
+ * Utiliser .get pour les selection car il n'y a pas de modification du type (insertion, suppression et modification)
+ */
+
 const Sqlite = require('better-sqlite3'); // Chargement du module better-sqlite3 qui permet la création et gestion d'une base de données relationnelle
 
 let db = new Sqlite('db.sqlite'); // Création de notre base de donnée
