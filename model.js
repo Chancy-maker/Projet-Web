@@ -37,6 +37,9 @@ db.prepare("CREATE TABLE student (id_student INTEGER PRIMARY KEY AUTOINCREMENT, 
 db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES ('Akpata', 'Kodjo Pierre', 'pierreakpata8@gmail.com', 'Pierre2022@')").run();
 db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES ('BAYEDI-MAYOMBO', ' Chancy', 'bayedi20@gmail.com', 'Chancy2022@')").run();
 
+
+/**************************Fonction relative aux annunce************************* */
+
 /* Lire le contenu d'une annonce à partir de son identifiant.
 
 Cette fonction prend en argument un identifiant d'annonce.
@@ -62,10 +65,19 @@ exports.read = (id_annunce) => {
 
 exports.create = function(title, salary, type_of_job, description) {
   let annunce_created = db.prepare("INSERT INTO annunce (title, salary, type_of_job, description) VALUES (?,?, ?, ?)").run(title, salary, type_of_job, description);
-  return annunce_created.id_annunce;
+  return annunce_created.lastInsertRowid;
   }
 
   
+/**
+ * 
+ * @param {*} id_annunce 
+ * @param {*} title 
+ * @param {*} salary 
+ * @param {*} type_of_job 
+ * @param {*} description 
+ * @returns 
+ */
 exports.update = function(id_annunce,title, salary, type_of_job, description ) {
     let movie_list = db.prepare('SELECT * FROM annunce ORDER BY id_annunce').all();
   
@@ -78,7 +90,11 @@ exports.update = function(id_annunce,title, salary, type_of_job, description ) {
     }
   }
 
-  /* Fonction pour effacer une annonce dans la base à partir de son identifiant */
+/**
+ * 
+ * @param {*} id_annunce 
+ * @returns 
+ */
 exports.delete = function(id_annunce) {
     let deleter = db.prepare("DELETE * FROM annunce WHERE id_annunce = ?").run(id_annunce);
     return deleter.changes > 0;
@@ -93,3 +109,42 @@ exports.delete = function(id_annunce) {
     return movie_list;
   }
   
+/***************************Fonction relative aux students********************************* */
+/**
+ * La fonction login permet de renvoyer le numéro d'utilisateur s'il est bien authentifié, ou -1 sinon
+ */
+ exports.studen_login = (mail, password)=>{
+    let student = db.prepare("SELECT * FROM student WHERE mail = ? AND password=?").get(mail, password);
+    // return user? user.rowid: -1;
+    if(!student) return -1;
+     return student.rowid; // return l'id de l'utilisateur;
+  }
+  
+  exports.student_new_user = (first_name, last_name, mail, password) =>{
+    let student = db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES (?,?, ?, ?)").run(first_name, last_name, mail, password);
+    return student.lastInsertRowid;
+  }
+
+/***************************Fonction relative auxEntreprise******************************** */
+/**
+ * La fonction login permet de renvoyer le numéro d'utilisateur s'il est bien authentifié, ou -1 sinon
+ */
+ exports.company_login = (identifiant, password)=>{
+    let company = db.prepare("SELECT * FROM company WHERE identifiant = ? AND password=?").get(identifiant, password);
+    // return user? user.rowid: -1;
+    if(!company) return -1;
+     return company.rowid; // return l'id de l'utilisateur;
+  }
+  
+  exports.company_new_user = (name, identifiant, password, website, activity_area, address) =>{
+    let company = db.prepare("INSERT INTO company (name, identifiant, password, website, activity_area, address) VALUES (?,?, ?, ?,?,?)").run(name, identifiant, password, website, activity_area, address);
+    return company.lastInsertRowid;
+  }
+
+  /****************************Fonction relative à l'administrateur****************************** */
+  exports.company_login = (identifiant, password)=>{
+    let admin = db.prepare("SELECT * FROM company WHERE identifiant = ? AND password=?").get(identifiant, password);
+    // return user? user.rowid: -1;
+    if(!admin) return -1;
+     return admin.rowid; // return l'id de l'utilisateur;
+  }
