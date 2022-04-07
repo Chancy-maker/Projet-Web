@@ -4,40 +4,6 @@ const Sqlite = require('better-sqlite3'); // Chargement du module better-sqlite3
 
 let db = new Sqlite('db.sqlite'); // Création de notre base de donnée
 
-//Création de la table administrator
-db.prepare("DROP TABLE IF EXISTS administrator").run();
-db.prepare("CREATE TABLE administrator (id_administrator INTEGER PRIMARY KEY AUTOINCREMENT, identifiant TEXT,password TEXT)").run();
-
-//insertion de l'adiministrateur
-db.prepare("INSERT INTO administrator (identifiant, password) VALUES ('admin', 'admin')").run();
-
-//Création de la table company
-db.prepare("DROP TABLE IF EXISTS company").run();
-db.prepare("CREATE TABLE company (id_company INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, identifiant TEXT, password TEXT, website TEXT, activity_area TEXT, address TEXT)").run();
-
-//insertion de deux entreprises
-db.prepare("INSERT INTO company (name, identifiant, password, website, activity_area, address) VALUES ('Orange', 'Orange', 'Orange2010', 'https://www.orange.fr/', 'Informatique', 'Boutique Orange Canebière - Marseille, 30 RUE DE, La Canebière, 13001')").run();
-db.prepare("INSERT INTO company (name, identifiant, password, website, activity_area, address) VALUES ('Sopra Steria', 'Sopra', 'steria2010', 'https://www.soprasteria.fr/', 'Informatique', 'Sopra Steria Group, Bâtiment Olympe, 550 Rue Pierre Berthier CS 40496, 13290 Aix-en-Provence')").run();
-
-
-//Création de la table annunce
-db.prepare("DROP TABLE IF EXISTS annunce").run();
-db.prepare("CREATE TABLE annunce (id_annunce INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, salary TEXT, type_of_job TEXT, description TEXT,id_company )").run();
-
-//insertion de deux annonces
-db.prepare("INSERT INTO annunce (title, salary, type_of_job, description) VALUES ('Developpeur Web Front-end', '1500£/mois', 'Stage', 'Developpeur web junior, compétence recherché : HTML, CC, javascript')").run();
-db.prepare("INSERT INTO annunce (title, salary, type_of_job, description) VALUES ('Ingénieur en cyber sécurité', '2000£/mois', 'CDI', 'Cherche expert en cyber sécurité')").run();
-
-
-//Création de la table student
-db.prepare("DROP TABLE IF EXISTS student").run();
-db.prepare("CREATE TABLE student (id_student INTEGER PRIMARY KEY AUTOINCREMENT, first_name TEXT,last_name TEXT, mail TEXT, password TEXT) ").run();
-
-//insertion de deux étudiants
-db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES ('Akpata', 'Kodjo Pierre', 'pierreakpata8@gmail.com', 'Pierre2022@')").run();
-db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES ('BAYEDI-MAYOMBO', ' Chancy', 'bayedi20@gmail.com', 'Chancy2022@')").run();
-
-
 /**************************Fonction relative aux annunce************************* */
 
 /* Lire le contenu d'une annonce à partir de son identifiant.
@@ -62,15 +28,28 @@ exports.read = (id_annunce) => {
   };
 
 
-
+/**
+ * La fonxtion create crée une annonce dans la base de donées.
+ * Elle retourne l'id si le nombre de changement effectué dans la base de donnée est supérieure à 0, sinon elle retourne -1
+ * @param {*} title 
+ * @param {*} salary 
+ * @param {*} type_of_job 
+ * @param {*} description 
+ * @returns 
+ */
 exports.create = function(title, salary, type_of_job, description) {
   let annunce_created = db.prepare("INSERT INTO annunce (title, salary, type_of_job, description) VALUES (?,?, ?, ?)").run(title, salary, type_of_job, description);
-  return annunce_created.lastInsertRowid;
+  if(annunce_created.changes > 0){
+      return annunce_created.lastInsertRowid;
+  }else{
+      return -1;
+  }
   }
 
   
 /**
- * 
+ * La fonction update modifie le contenue d'une annonce dans la base de données.
+ * Elle retourne true si le nombre de changement éffectué dans la base de données est supérieure à 1, sinon elle retourne false
  * @param {*} id_annunce 
  * @param {*} title 
  * @param {*} salary 
@@ -79,25 +58,27 @@ exports.create = function(title, salary, type_of_job, description) {
  * @returns 
  */
 exports.update = function(id_annunce,title, salary, type_of_job, description ) {
-    let movie_list = db.prepare('SELECT * FROM annunce ORDER BY id_annunce').all();
-  
-  if(id_annunce > movie_list.length){
-    return false
-  }else{
-    db.prepare("UPDATE annunce SET title= ?, salary=?,type_of_job=?, description=?  WHERE id_annunce =  " + id_annunce).run(title, salary, type_of_job, description);
-
+    let update = db.prepare("UPDATE annunce SET title= ?, salary=?,type_of_job=?, description=?  WHERE id_annunce =  " + id_annunce).run(title, salary, type_of_job, description);
+  if(update.changes > 0){
     return true;
+  }else{
+      return false;
     }
   }
 
 /**
- * 
+ * La fonction delete supprime une annonce dans la base de donnée.
+ * Elle return true si le nombre de changement éffectué dans la base de données est supérieur à 1 sinon elle retourne faux.
  * @param {*} id_annunce 
  * @returns 
  */
 exports.delete = function(id_annunce) {
-    let deleter = db.prepare("DELETE * FROM annunce WHERE id_annunce = ?").run(id_annunce);
-    return deleter.changes > 0;
+    let deleter = db.prepare("DELETE  FROM annunce WHERE id_annunce = ?").run(id_annunce);
+    if(deleter.changes > 0){
+        return true;
+    }
+    return false;
+
   }
 
   /**
@@ -111,40 +92,80 @@ exports.delete = function(id_annunce) {
   
 /***************************Fonction relative aux students********************************* */
 /**
- * La fonction login permet de renvoyer le numéro d'utilisateur s'il est bien authentifié, ou -1 sinon
+ * La fonction company_new_user crée un nouvelle utilisateur (Etudiant).
+ * Elle retourne le nombre de changement éffectué par l'insersion( c-a-d 1)
+ * @param {*} first_name 
+ * @param {*} last_name 
+ * @param {*} mail 
+ * @param {*} password 
+ * @returns 
  */
+ exports.student_new_user = (first_name, last_name, mail, password) =>{
+    let student = db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES (?,?, ?, ?)").run(first_name, last_name, mail, password);
+    return student.changes > 0;
+  }
+
+  /**
+   * La fonction studen verifie si le mail et le mot de passe mis en paramètre sont celle d'un des utilisateur (Etudian).
+   * Elle retourne l'id de l'étudiant si'il est bien authentifié sinon il retourne -1.
+   * @param {*} mail 
+   * @param {*} password 
+   * @returns 
+   */
  exports.studen_login = (mail, password)=>{
     let student = db.prepare("SELECT * FROM student WHERE mail = ? AND password=?").get(mail, password);
     // return user? user.rowid: -1;
     if(!student) return -1;
-     return student.rowid; // return l'id de l'utilisateur;
+     return student.lastInsertRowid; // return l'id de l'utilisateur;
   }
   
-  exports.student_new_user = (first_name, last_name, mail, password) =>{
-    let student = db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES (?,?, ?, ?)").run(first_name, last_name, mail, password);
-    return student.lastInsertRowid;
-  }
+  
 
 /***************************Fonction relative auxEntreprise******************************** */
 /**
- * La fonction login permet de renvoyer le numéro d'utilisateur s'il est bien authentifié, ou -1 sinon
+ * La fonction company_new_user crée un nouvelle utilisateur (entreprise).
+ * Elle retourne le nombre de changement éffectué par l'insersion( c-a-d 1)
+ * @param {*} name 
+ * @param {*} identifiant 
+ * @param {*} password 
+ * @param {*} website 
+ * @param {*} activity_area 
+ * @param {*} address 
+ * @returns 
  */
+ exports.company_new_user = (name, identifiant, password, website, activity_area, address) =>{
+    let company = db.prepare("INSERT INTO company (name, identifiant, password, website, activity_area, address) VALUES (?,?, ?, ?,?,?)").run(name, identifiant, password, website, activity_area, address);
+    return company.changes > 0;
+  }
+
+  /**
+   * La fonction company_login verifie si l'identifiant et le mot de passe mis en paramètre sont celle d'un des utilisateur (Entreprise).
+   * Elle retourne l'id de l'entreprise si'il est bien authentifié sinon il retourne -1.
+   * @param {*} identifiant 
+   * @param {*} password 
+   * @returns 
+   */
  exports.company_login = (identifiant, password)=>{
     let company = db.prepare("SELECT * FROM company WHERE identifiant = ? AND password=?").get(identifiant, password);
     // return user? user.rowid: -1;
     if(!company) return -1;
-     return company.rowid; // return l'id de l'utilisateur;
+     return company.lastInsertRowid; // return l'id de l'utilisateur;
   }
   
-  exports.company_new_user = (name, identifiant, password, website, activity_area, address) =>{
-    let company = db.prepare("INSERT INTO company (name, identifiant, password, website, activity_area, address) VALUES (?,?, ?, ?,?,?)").run(name, identifiant, password, website, activity_area, address);
-    return company.lastInsertRowid;
-  }
+  
 
   /****************************Fonction relative à l'administrateur****************************** */
-  exports.company_login = (identifiant, password)=>{
-    let admin = db.prepare("SELECT * FROM company WHERE identifiant = ? AND password=?").get(identifiant, password);
+
+  /**
+   * La fonction administrator_login verifie si l'identifiant et le mot de passe mis en paramètre sont celle de l'administrateur.
+   * Elle retourne l'id de l'administrateur
+   * @param {*} identifiant 
+   * @param {*} password 
+   * @returns 
+   */
+  exports.administrator_login = (identifiant, password)=>{
+    let admin = db.prepare("SELECT * FROM administrator WHERE identifiant = ? AND password=?").get(identifiant, password);
     // return user? user.rowid: -1;
     if(!admin) return -1;
-     return admin.rowid; // return l'id de l'utilisateur;
+     return admin.lastInsertRowid; // return l'id de l'utilisateur;
   }

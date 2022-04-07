@@ -12,6 +12,12 @@ app.get('/', (req, res) =>{
     
 })
 
+
+/**
+ * Fonction à vérifier : fonction sur les étudiants, les entreprises et l'administrateur
+ */
+
+
 app.listen(3000, ()=>{
     console.log("Server listening on port http://localhost:3000");
 })
