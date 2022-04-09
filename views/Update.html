@@ -1,1 +1,15 @@
-/*********Formulaire de modification d'une annonce*******/
+{{ > header}}
+<h1>Formulaire de modification d'annonce</h1>
+    <form action="/update/{{id_annunce}}" method="post">
+        <label for="title">Titre </label>
+         <input type="text"  id="title" name="title" value="{{title}}" size="50"> <br>
+         <label for="salary">salary </label>
+        <input type="text" id="salary" name="salary" value="{{salary}}" size="50"><br>
+        <label for="type_of_job">type_of_job </label>
+         <input type="text"  id="type_of_job" name="type_of_job" value="{{type_of_job}}" size="50"><br>
+        <label for="description">description </label>
+        <input type="text" id="description" name="description" value="{{description}}" size="50"><br>
+        <input id="annonce" type="submit" value="modifier l'annonce"> </div>
+    </form>
+
+{{> footer}}

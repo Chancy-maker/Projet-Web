@@ -1,1 +1,13 @@
-/*****Page d'accueil du site*****/
+{{ > header }}
+<h1>Bienvenue dans votre collection d'annonce </h1>
+<p>Pour ajouter une annonce cliquer ici -> <a href="/create">Ajouter</a></p>
+{{#annunces}}
+
+
+<h6>Titre de l'annonce : {{title}}</h2>
+<a href="/read/{{id_annunce}}">Détails de l'annonce</a><br>
+<a href="/update/{{id_annunce}}">modifier des information de l'annonce</a><br>
+<a href="/delete/{{id_annunce}}">Supprimer l'annonce </a> <br>
+
+{{/annunces}}
+  {{ > footer }}

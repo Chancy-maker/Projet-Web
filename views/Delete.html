@@ -1,1 +1,12 @@
-/*****Formulaire de suppression d'une annonce********/
+{{ > header}}
+
+<h1> Supprimer une annonce </h1>
+    Voulez-vous vraiment supprimer "{{title}}" ?
+    <form action="/">
+        <input type="submit" value="Annuler">
+        </form>
+    <form action="/delete/{{id_annunce}}" method="post">
+        <input type="submit" value="Supprimer">
+    </form>
+
+{{> footer}}

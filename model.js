@@ -83,7 +83,6 @@ exports.delete = function(id_annunce) {
         return true;
     }
     return false;
-
   }
 
   /**
@@ -93,6 +92,14 @@ exports.delete = function(id_annunce) {
   exports.list = function(){
     let movie_list = db.prepare('SELECT * FROM annunce ORDER BY id_annunce').all();
     return movie_list;
+  }
+
+  /**
+   * Cette fonction retourne une liste de résultats en fonction de la recherche faite par l'utilisateur.
+   * Les recherche seront faites en fontion du secteur d'activité
+   */
+  exports.search = function(){
+
   }
   
 /***************************Fonction relative aux students********************************* */
@@ -121,7 +128,7 @@ exports.delete = function(id_annunce) {
     let student = db.prepare("SELECT * FROM student WHERE mail = ? AND password=?").get(mail, password);
     // return user? user.rowid: -1;
     if(!student) return -1;
-     return student.lastInsertRowid; // return l'id de l'utilisateur;
+     return student.id_student; // return l'id de l'utilisateur;
   }
   
   
@@ -154,7 +161,7 @@ exports.delete = function(id_annunce) {
     let company = db.prepare("SELECT * FROM company WHERE identifiant = ? AND password=?").get(identifiant, password);
     // return user? user.rowid: -1;
     if(!company) return -1;
-     return company.lastInsertRowid; // return l'id de l'utilisateur;
+     return company.id_company; // return l'id de l'utilisateur;
   }
   
   
@@ -172,5 +179,5 @@ exports.delete = function(id_annunce) {
     let admin = db.prepare("SELECT * FROM administrator WHERE identifiant = ? AND password=?").get(identifiant, password);
     // return user? user.rowid: -1;
     if(!admin) return -1;
-     return admin.lastInsertRowid; // return l'id de l'utilisateur;
+     return admin.id_administrator; // return l'id de l'utilisateur;
   }

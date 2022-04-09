@@ -1,0 +1,20 @@
+{{ > header}}
+
+<h1>Formulaire de création de compte (entreprise) </h1>
+    <form action="/company_new_user" method="post">
+        <label for="name">name</label>
+         <input type="text"  id="name" name="name" value="" size="50"> <br>
+         <label for="identifiant">identifiant </label>
+        <input type="text" id="identifiant" name="identifiant" value="" size="50"><br>
+        <label for="password">password </label>
+         <input type="text"  id="password" name="password" value="" size="50"><br>
+        <label for="website">website </label>
+        <input type="text" id="website" name="website" value="" size="50"><br>
+        <label for="activity_area">activity_area</label>
+    <input type="text"  id="activity_area" name="activity_area" value="" size="70"><br>
+       <label for="address">address</label>
+       <input type="text"  id="address" name="address" value="" size="70"><br>
+        <input id="inscription" type="submit" value="inscription"> </div>
+    </form>
+
+{{> footer}}
