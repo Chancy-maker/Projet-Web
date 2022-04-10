@@ -25,6 +25,7 @@ Cette fonction renvoie null si l'identifiant n'existe pas.
  */
 exports.read = (id_annunce) => {
     let found = db.prepare('SELECT * FROM annunce WHERE id_annunce = ?').get(id_annunce);
+    console.log(found)
     if(found !== undefined) {
       return found;
     } else {
@@ -42,8 +43,8 @@ exports.read = (id_annunce) => {
  * @param {*} description 
  * @returns 
  */
-exports.create = function(title, salary, type_of_job, description) {
-  let annunce_created = db.prepare("INSERT INTO annunce (title, salary, type_of_job, description) VALUES (?,?, ?, ?)").run(title, salary, type_of_job, description);
+exports.create = function(title, salary, type_of_job, description, id_company) {
+  let annunce_created = db.prepare("INSERT INTO annunce (title, salary, type_of_job, description, id_company) VALUES (?,?, ?, ?,?)").run(title, salary, type_of_job, description, id_company);
   if(annunce_created.changes > 0){
       return annunce_created.lastInsertRowid;
   }else{
@@ -163,7 +164,33 @@ exports.delete = function(id_annunce) {
     if(!company) return -1;
      return company.id_company; // return l'id de l'utilisateur;
   }
+
+  /**
+   * Cette fonction retourne la liste des annonces créé par l'entreprise d'identifiant id_company.
+   */
+  exports.company_annunces(id_company){
+    //
+  }
+
+  /**
+   * Cette fonction d'ajouter à la postulate un couple de postulatin (étudiant, annonce)
+   */
+exports.postuler(id_student, id_annunce){
+  //
+}
+
+
+  /**
+   * Cette fonction retourne La liste des étudiants ayant postulé pour une annonce.
+   */
+  exports.annunces_postulates (id_annunce){
+    
+  }
   
+  /**
+   * Cette fonction retourne la liste des annonces postulé par un étudiant
+   */
+  exports.annunces
   
 
   /****************************Fonction relative à l'administrateur****************************** */
@@ -181,3 +208,4 @@ exports.delete = function(id_annunce) {
     if(!admin) return -1;
      return admin.id_administrator; // return l'id de l'utilisateur;
   }
+

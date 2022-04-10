@@ -25,11 +25,11 @@ db.prepare("INSERT INTO company (name, identifiant, password, website, activity_
 
 //Création de la table annunce
 db.prepare("DROP TABLE IF EXISTS annunce").run();
-db.prepare("CREATE TABLE annunce (id_annunce INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, salary TEXT, type_of_job TEXT, description TEXT,id_company )").run();
+db.prepare("CREATE TABLE annunce (id_annunce INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT, salary TEXT, type_of_job TEXT, description TEXT,id_company INTEGER)").run();
 
 //insertion de deux annonces
-db.prepare("INSERT INTO annunce (title, salary, type_of_job, description) VALUES ('Developpeur Web Front-end', '1500£/mois', 'Stage', 'Developpeur web junior, compétence recherché : HTML, CC, javascript')").run();
-db.prepare("INSERT INTO annunce (title, salary, type_of_job, description) VALUES ('Ingénieur en cyber sécurité', '2000£/mois', 'CDI', 'Cherche expert en cyber sécurité')").run();
+db.prepare("INSERT INTO annunce (title, salary, type_of_job, description, id_company) VALUES ('Developpeur Web Front-end', '1500£/mois', 'Stage', 'Developpeur web junior, compétence recherché : HTML, CC, javascript',1)").run();
+db.prepare("INSERT INTO annunce (title, salary, type_of_job, description, id_company) VALUES ('Ingénieur en cyber sécurité', '2000£/mois', 'CDI', 'Cherche expert en cyber sécurité', '2')").run();
 
 
 //Création de la table student
@@ -39,3 +39,8 @@ db.prepare("CREATE TABLE student (id_student INTEGER PRIMARY KEY AUTOINCREMENT, 
 //insertion de deux étudiants
 db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES ('Akpata', 'Kodjo Pierre', 'pierreakpata8@gmail.com', 'Pierre2022@')").run();
 db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES ('BAYEDI-MAYOMBO', ' Chancy', 'bayedi20@gmail.com', 'Chancy2022@')").run();
+
+
+//Création de la table posulate
+db.prepare("DROP TABLE IF EXISTS postulate").run();
+db.prepare("CREATE TABLE postulate (id_postulate INTEGER PRIMARY KEY AUTOINCREMENT, id_annunce INTEGER, id_student INTEGER)").run();

@@ -1,0 +1,50 @@
+{{ > header}}
+
+<h1>Dans cette vues on aura l'ensemble des annonces qu'une entreprise aura créé avec la possibilité de les modifier, de les supprimé et 
+  d'en créer. </h1>
+
+
+
+
+
+{{ > footer}}
+
+<!--<div class="row">
+    {{#results}}
+    <div class="col mb-3">
+      <div class="card h-100" style="width: 18rem;">
+      <a href="/read/{{entry}}">
+        <div>
+          <img src="{{img}}" class="card-img-top" >
+          <div>
+              <h5 class="card-title">{{title}}</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+    </div>
+    {{/results}}-->
+
+<!--
+/<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Student Opp</a>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      {{#authenticated}}
+      <li><a href="/search" class="btn btn-primary mr-2">Toutes les annonces</a></li>
+      <li><a href="/create" class="btn btn-primary mr-2">Créer une annonce</a></li>
+      <li><a href="/student_logout" class="btn btn-primary mr-2">Se déconnecter ({{name}})</a></li>
+      {{/authenticated}}
+      {{^authenticated}}
+      <li><a href="/company_login" class="btn btn-primary mr-2">Se connecter</a></li>
+      <li><a href="/new_user_company" class="btn btn-primary mr-2">Créer un compte</a></li>
+      {{/authenticated}}
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action="/search">
+      <input class="form-control mr-sm-2" type="text" placeholder="Requête" name="query" aria-label="Search" value="{{query}}">
+      <input class="btn btn-secondary my-2 my-sm-0" type="submit" value="Rechercher">
+    </form>
+  </div>
+</nav>
+-->

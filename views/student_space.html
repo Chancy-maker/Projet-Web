@@ -1,0 +1,14 @@
+{{ > header}}
+
+{{#annunces}}
+
+<h1>Bienvenue dans votre collection d'annonce </h1>
+<h6>Titre de l'annonce : {{title}}</h2>
+<a href="/read/{{id_annunce}}">Détails de l'annonce</a><br>
+<a href="/update/{{id_annunce}}">modifier des information de l'annonce</a><br>
+<a href="/delete/{{id_annunce}}">Supprimer l'annonce </a> <br>
+
+{{/annunces}}
+
+
+{{ >footer}}

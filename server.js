@@ -93,6 +93,7 @@ app.get('/read/:id_annunce', (req, res) =>{
     res.render('read', entry);
 });
 
+
 /**
  * Renvoie le formulaire de création d'une annonce
  */
@@ -131,15 +132,12 @@ app.get('/company_login', (req, res) =>{
     res.render('company_login');
 })
 
-app.get('/student_logout', (req, res) =>{
+app.get('/logout', (req, res) =>{
   req.session = null;
   res.redirect('/');
 })
 
-app.get('/company_logout', (req, res)=>{
-  req.session = null;
-  res.redirect('/');
-})
+
 
 /**
  * Retourne le formulaire de création de compte pour les étudiants
@@ -155,13 +153,26 @@ app.get('/new_user_company', (req, res) =>{
     res.render('new_user_company');
 })
 
+/**
+ * Retourne l'espace personnel des étudiants
+ */
+app.get('/student_space', (req, res) =>{
+  res.render('student_space', {annunces : model.list()});
+})
+ /**
+  * Retourne L'espace personnel des entreprises
+  */
+ app.get('/company_space', (req, res) =>{
+   res.render('company_space', {annunces : model.list()});
+ })
 
 
 /******************Routs pour modifier les données****************** */
 
 
 app.post('/create', (req, res) =>{
-    let id_annunce = model.create(req.body.title, req.body.salary, req.body.type_of_job, req.body.description)
+  console.log(req.session.user);
+    let id_annunce = model.create(req.body.title, req.body.salary, req.body.type_of_job, req.body.description,req.session.user )
     res.redirect('/read/' + id_annunce);
 })
 
@@ -180,9 +191,9 @@ app.post('/student_login', (req, res) =>{
     if (user != -1) {
     req.session.user = user;
     req.session.name = req.body.mail;
-    res.redirect('/');
+    res.redirect('/student_space');
   } else {
-    res.redirect('/student_login');
+    res.redirect('/');
   }
 }) 
 app.post('/company_login', (req, res) =>{
@@ -190,9 +201,9 @@ app.post('/company_login', (req, res) =>{
     if (user != -1) {
     req.session.user = user;
     req.session.name = req.body.identifiant;
-    res.redirect('/');
+    res.redirect('/company_space');
   } else {
-    res.redirect('/company_login');
+    res.redirect('/');
   }
 }) 
 
@@ -203,7 +214,7 @@ app.post('/student_new_user', (req, res) =>{
   if (user != -1) {
     req.session.user = user;
     req.session.name = req.body.mail;
-    res.redirect('/');
+    res.redirect('/student_space');
   } else {
     res.redirect('/');
   }
@@ -214,7 +225,7 @@ app.post('/company_new_user', (req, res) =>{
 if (user != -1) {
   req.session.user = user;
   req.session.name = req.body.identifiant;
-  res.redirect('/');
+  res.redirect('/company_space');
 } else {
   res.redirect('/');
 }
@@ -223,6 +234,6 @@ if (user != -1) {
 
 
 
-app.listen(8080, ()=>{
-    console.log("Server listening on port http://localhost:8080");
+app.listen(1921, ()=>{
+    console.log("Server listening on port http://localhost:1921");
 })
