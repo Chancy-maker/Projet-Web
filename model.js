@@ -131,6 +131,8 @@ exports.delete = function(id_annunce) {
     if(!student) return -1;
      return student.id_student; // return l'id de l'utilisateur;
   }
+
+  
   
   
 
@@ -168,29 +170,23 @@ exports.delete = function(id_annunce) {
   /**
    * Cette fonction retourne la liste des annonces créé par l'entreprise d'identifiant id_company.
    */
-  exports.company_annunces(id_company){
-    //
-  }
+  //exports.company_annunces(id_company){}
 
   /**
    * Cette fonction d'ajouter à la postulate un couple de postulatin (étudiant, annonce)
    */
-exports.postuler(id_student, id_annunce){
-  //
-}
+//exports.postuler(id_student, id_annunce){}
 
 
   /**
    * Cette fonction retourne La liste des étudiants ayant postulé pour une annonce.
    */
-  exports.annunces_postulates (id_annunce){
-    
-  }
+  //exports.annunces_postulates (id_annunce){ }
   
   /**
    * Cette fonction retourne la liste des annonces postulé par un étudiant
    */
-  exports.annunces
+  //exports.annunces
   
 
   /****************************Fonction relative à l'administrateur****************************** */
