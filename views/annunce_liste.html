@@ -1,3 +1,17 @@
 {{ > header}}
-    <h1>Ctte vue permettra d'afficher des résultat à une recherche </h1>
-{{ > footer}}
+
+<h1>Liste des annonces du site</h1>
+
+{{#annunces_list}}
+
+title : {{title}}<br>
+Entreprise : {{name}} <br>
+salary : {{salary}}<br>
+type_of_job : {{type_of_job}}
+<a href="/read/{{id_annunce}}">Détail annonces </a><br>
+<a href="#">postuler</a><br>
+
+{{/annunces_list}}
+
+
+{{> footer}}

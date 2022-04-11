@@ -39,28 +39,25 @@
             {{/authenticated}}
             {{#authenticated}}
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/search">Toutes les annonces</a>
+              <a class="nav-link active" aria-current="page" href="/annunce_liste">Toutes les annonces</a>
             </li>
-           
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/create">Créer une annonce</a>
-            </li>
-            
+            </li>        
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/logout">Se Déconnecter {{name}}</a>
             </li class="nav-item">
             <li>
-              <a class="nav-link active" aria-current="page" href="/logout"> mon espace</a>
+              <a class="nav-link active" aria-current="page" href="/company_space"> mon espace</a>
             </li>
-            <li class="nav-item ">
-              <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-              </form>
-            </li>
-            
             {{/authenticated}}
           </ul>
+          {{#authenticated}}
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+          {{/authenticated}}
           
           
           

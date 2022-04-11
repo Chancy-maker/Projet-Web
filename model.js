@@ -24,7 +24,7 @@ Elle renvoie une annonce sous la forme d'un objet :
 Cette fonction renvoie null si l'identifiant n'existe pas.
  */
 exports.read = (id_annunce) => {
-    let found = db.prepare('SELECT * FROM annunce WHERE id_annunce = ?').get(id_annunce);
+    let found = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE annunce.id_company = ?').get(id_annunce);
     console.log(found)
     if(found !== undefined) {
       return found;
@@ -91,7 +91,7 @@ exports.delete = function(id_annunce) {
    * @returns 
    */
   exports.list = function(){
-    let movie_list = db.prepare('SELECT * FROM annunce ORDER BY id_annunce').all();
+    let movie_list = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company').all();
     return movie_list;
   }
 
@@ -170,23 +170,42 @@ exports.delete = function(id_annunce) {
   /**
    * Cette fonction retourne la liste des annonces créé par l'entreprise d'identifiant id_company.
    */
-  //exports.company_annunces(id_company){}
+  exports.company_annunces = function(id_company){
+    let company_annunces = db.prepare("SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE company.id_company = ?").all(id_company);
+    if(!company_annunces) return -1;
+    return company_annunces;
+  }
 
   /**
    * Cette fonction d'ajouter à la postulate un couple de postulatin (étudiant, annonce)
    */
-//exports.postuler(id_student, id_annunce){}
+exports.postuler = function(id_student, id_annunce){
+  let add = db.prepare("INSERT INTO postulate (id_student, id_annunce) VALUES (?,?)").run(id_student,id_annunce);
+  if(add.changes > 0){
+    return add.lastInsertRowid;
+    }else{
+    return -1;
+  }
+}
 
 
   /**
    * Cette fonction retourne La liste des étudiants ayant postulé pour une annonce.
    */
-  //exports.annunces_postulates (id_annunce){ }
+  exports.student_annunces_postulates = function(id_annunce){
+    let student_annunces_postulate = db.prepare("SELECT * FROM student INNER JOIN postulate ON student.id_student = postulate.id_student WHERE id_annunce = ?").get(id_annunce);
+    if(!student_annunces_postulate) return -1;
+    return student_annunces_postulate
+   }
   
   /**
    * Cette fonction retourne la liste des annonces postulé par un étudiant
    */
-  //exports.annunces
+  exports.annunces_tudent_postulates = function(id_student){
+    let student_annunces_postulate = db.prepare("SELECT * FROM annunce INNER JOIN postulate ON annunce.id_annunce = postulate.id_annunce WHERE id_student = ?").get(id_student);
+    if(!student_annunces_postulate) return -1;
+    return student_annunces_postulate
+  }
   
 
   /****************************Fonction relative à l'administrateur****************************** */

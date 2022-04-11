@@ -49,14 +49,18 @@ app.use(cookieSession ({
 
 
 
+
 // middleware qui ajoute deux variables de session aux templates : authenticated et le nom de l'utilisateur
-app.use(function(req, res, next) {
+function authenticated(req, res, next) {
     if (req.session.user !== undefined) {
       res.locals.authenticated = true;
       res.locals.name = req.session.name;
     }
     return next();
-  });
+  };
+  app.use(authenticated);
+
+
 
 
   
@@ -65,7 +69,7 @@ app.use(function(req, res, next) {
  * Renvoie la page d'accueil du site
  */
 app.get('/', (req, res) =>{
-  res.render('index', {annunces : model.list()});
+  res.render('index');
 })
 
 /**
@@ -147,13 +151,17 @@ app.get('/new_user_company', (req, res) =>{
  * Retourne l'espace personnel des étudiants
  */
 app.get('/student_space', (req, res) =>{
-  res.render('student_space', {annunces : model.list()});
+  res.render('student_space', {student_annunces : model.list()});
 })
  /**
   * Retourne L'espace personnel des entreprises
   */
  app.get('/company_space', (req, res) =>{
-   res.render('company_space', {annunces : model.list()});
+   res.render('company_space', {company_annunces : model.company_annunces(req.session.user)});
+ })
+
+ app.get('/annunce_liste', (req, res) =>{
+   res.render('annunce_liste', {annunces_list : model.list()})
  })
 
 
@@ -180,6 +188,7 @@ app.post('/student_login', (req, res) =>{
     const user = model.studen_login(req.body.mail, req.body.password);
     if (user != -1) {
     req.session.user = user;
+  
     req.session.name = req.body.mail;
     res.redirect('/');
   } else {
@@ -212,6 +221,7 @@ app.post('/student_new_user', (req, res) =>{
 
 app.post('/company_new_user', (req, res) =>{
   const user = model.company_new_user(req.body.name, req.body.identifiant, req.body.password, req.body.website, req.body.activity_area, req.body.address);
+  console.log(user.id_company);
 if (user != -1) {
   req.session.user = user;
   req.session.name = req.body.identifiant;

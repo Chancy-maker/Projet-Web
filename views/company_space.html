@@ -3,24 +3,24 @@
 <h1>Dans cette vues on aura l'ensemble des annonces qu'une entreprise aura créé avec la possibilité de les modifier, de les supprimé et 
   d'en créer. </h1>
 
-
+<div class="row">
+    {{#company_annunces}}
+    <div class="col mb-3">
+      <div class="card h-100" style="width: 18rem;">
+        <div>
+          
+          title : {{title}}<br>
+          salary : {{salary}}<br>
+          type_of_job : {{type_of_job}}<br>
+          description : {{description}}<br>
+          
+        </div>
+    </div>
+    </div>
+    {{/company_annunces}}
 
 
 
 {{ > footer}}
 
-<!--<div class="row">
-    {{#results}}
-    <div class="col mb-3">
-      <div class="card h-100" style="width: 18rem;">
-      <a href="/read/{{entry}}">
-        <div>
-          <img src="{{img}}" class="card-img-top" >
-          <div>
-              <h5 class="card-title">{{title}}</h5>
-          </div>
-        </div>
-      </a>
-    </div>
-    </div>
-    {{/results}}-->
+
