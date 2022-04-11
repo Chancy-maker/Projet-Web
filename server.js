@@ -40,27 +40,14 @@ app.use(cookieSession ({
  * @param {*} next
  */
  function is_authenticated(req, res, next) {
-    if (req.session.user !== undefined) {
-      return next();
-    }
-    res.status(401).send('Authentication required');
+    if (req.session.user === undefined) {
+      res.status(401).send("You can not create à annunce");
+      
+    }return next();
+    
   }
 
-/**
- * Le midleware user_authentificated permettra au templates mustache d'avoir accès à l'information d'authentification
- * @param {*} req 
- * @param {*} res 
- * @param {*} next 
- */
-function user_authentificated(req, res,next){
-    if(req.session.user){
-        res.locals.authentificated = true;
-        res.locals.name = req.session.name;
-    }else{
-        res.locals.authentificated = false;
-    }
-    next();
-}
+
 
 // middleware qui ajoute deux variables de session aux templates : authenticated et le nom de l'utilisateur
 app.use(function(req, res, next) {
@@ -70,6 +57,9 @@ app.use(function(req, res, next) {
     }
     return next();
   });
+
+
+  
 
 /**
  * Renvoie la page d'accueil du site
@@ -191,7 +181,7 @@ app.post('/student_login', (req, res) =>{
     if (user != -1) {
     req.session.user = user;
     req.session.name = req.body.mail;
-    res.redirect('/student_space');
+    res.redirect('/');
   } else {
     res.redirect('/');
   }
@@ -201,7 +191,7 @@ app.post('/company_login', (req, res) =>{
     if (user != -1) {
     req.session.user = user;
     req.session.name = req.body.identifiant;
-    res.redirect('/company_space');
+    res.redirect('/');
   } else {
     res.redirect('/');
   }
@@ -214,7 +204,7 @@ app.post('/student_new_user', (req, res) =>{
   if (user != -1) {
     req.session.user = user;
     req.session.name = req.body.mail;
-    res.redirect('/student_space');
+    res.redirect('/');
   } else {
     res.redirect('/');
   }
@@ -225,7 +215,7 @@ app.post('/company_new_user', (req, res) =>{
 if (user != -1) {
   req.session.user = user;
   req.session.name = req.body.identifiant;
-  res.redirect('/company_space');
+  res.redirect('/');
 } else {
   res.redirect('/');
 }
