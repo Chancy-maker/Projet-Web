@@ -49,16 +49,28 @@ app.use(cookieSession ({
 
 
 
-
 // middleware qui ajoute deux variables de session aux templates : authenticated et le nom de l'utilisateur
-function authenticated(req, res, next) {
-    if (req.session.user !== undefined) {
+function student(req, res, next) {
+    if (req.session.student !== undefined) {
+      res.locals.student = true;
       res.locals.authenticated = true;
       res.locals.name = req.session.name;
     }
     return next();
   };
-  app.use(authenticated);
+
+  function company(req, res, next) {
+    if (req.session.company !== undefined) {
+      res.locals.company = true;
+      res.locals.authenticated = true;
+      res.locals.name = req.session.name;
+    }
+    return next();
+  };
+
+  
+  app.use(student);
+  app.use(company);
 
 
 
@@ -186,23 +198,29 @@ app.post('/delete/:id_annunce', (req, res) =>{
 
 app.post('/student_login', (req, res) =>{
     const user = model.studen_login(req.body.mail, req.body.password);
+    
+   
     if (user != -1) {
-    req.session.user = user;
-  
+      
+    req.session.student = user;
+
+    console.log(user)
+    console.log(req.session.student)
     req.session.name = req.body.mail;
     res.redirect('/');
   } else {
-    res.redirect('/');
+    res.redirect('student_login');
   }
 }) 
 app.post('/company_login', (req, res) =>{
     const user = model.company_login(req.body.identifiant, req.body.password);
+    
     if (user != -1) {
-    req.session.user = user;
+    req.session.company = user;
     req.session.name = req.body.identifiant;
     res.redirect('/');
   } else {
-    res.redirect('/');
+    res.redirect('/company_login');
   }
 }) 
 
