@@ -1,11 +1,19 @@
 {{ > header}}
 
 <h1>Formulaire de connexion étudiant</h1>
+<div class="container">
     <form action="/student_login" method="post">
+        <div class="form-group">
         <label for="mail">mail </label>
          <input type="text"  id="mail" name="mail" value="" size="50"> <br>
+        </div>
+
+        <div class="form-group">
          <label for="password">password</label>
         <input type="text" id="password" name="password" value="" size="50"><br>
-        <input id="connexion" type="submit" value="Connexion"> </div>
+    </div>
+
+        <input id="connexion" type="submit" class="btn btn-primary" value="Connexion"> </div>
     </form>
+</div>
 {{> footer}}

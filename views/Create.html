@@ -1,16 +1,31 @@
 {{ > header}}
 
-<h1>Formulaire de création d'annonce</h1>
+<h1>Créer votre annonce</h1>
+<div>
     <form action="/create" method="post">
+
+        <div class="form-group">
         <label for="title">Titre </label>
-         <input type="text"  id="title" name="title" value="" size="50"> <br>
-         <label for="salary">salary </label>
-        <input type="text" id="salary" name="salary" value="" size="50"><br>
+        <input type="text" class="form-control" id="title" name="title" value="" size="50" > <br>
+        </div>
+
+        <div class="form-group" >
+        <label for="salary">salary </label>
+        <input type="text" class="form-control" id="salary" name="salary" value="" size="50"><br>
+        </div>
+
+        <div class="form-group" >
         <label for="type_of_job">type_of_job </label>
-         <input type="text"  id="type_of_job" name="type_of_job" value="" size="50"><br>
+        <input type="text" class="form-control"  id="type_of_job" name="type_of_job" value="" size="50"><br>
+        </div>
+
+        <div class="form-group">
         <label for="description">description </label>
-        <input type="text" id="description" name="description" value="" size="50"><br>
-        <input id="annonce" type="submit" value="Créer une nouvelle annonce"> </div>
+        <input type="text" class="form-control" id="description" name="description" value="" size="10"><br>
+        </div>
+
+        <input id="annonce" class="btn btn-primary" type="submit" value="Créer une nouvelle annonce"> </div>
     </form>
+</div>
 
 {{> footer}}

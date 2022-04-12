@@ -1,16 +1,25 @@
 {{ > header}}
 
 <h1>Formulaire de création de compte (Etudiant) </h1>
+<div class="container">
     <form action="/student_new_user" method="post">
+        <div class="form-group">
         <label for="first_name">first_name</label>
          <input type="text"  id="first_name" name="first_name" value="" size="50"> <br>
+        </div>
+        <div class="form-group">
          <label for="last_name">last_name </label>
         <input type="text" id="last_name" name="last_name" value="" size="50"><br>
+        </div>
+        <div class="form-group">
         <label for="mail">mail </label>
          <input type="text"  id="mail" name="mail" value="" size="50"><br>
+        </div>
+        <div class="form-group">
         <label for="password">password </label>
         <input type="text" id="password" name="password" value="" size="50"><br>
-        <input id="inscription" type="submit" value="inscription"> </div>
+        </div>
+        <input id="inscription" type="submit" value="inscription" class="btn btn-primary"> </div>
     </form>
-
+</div>
 {{> footer}}
