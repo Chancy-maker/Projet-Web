@@ -99,9 +99,20 @@ exports.delete = function(id_annunce) {
    * Cette fonction retourne une liste de résultats en fonction de la recherche faite par l'utilisateur.
    * Les recherche seront faites en fontion du secteur d'activité
    */
-  exports.search = function(){
+  exports.search = ()=>{
+    query = query || "";
+    
 
-  }
+    var num_found = db.prepare('SELECT count(*) FROM annunce WHERE title LIKE ?').get('%' + query + '%')['count(*)'];
+    var results = db.prepare('SELECT id as ent, title, salary,type_of_job FROM annunce WHERE title LIKE ? ORDER BY id LIMIT ? OFFSET ?');
+
+    return {
+      results: results,
+      num_found: num_found, 
+      query: query,
+
+    };
+  };
   
 /***************************Fonction relative aux students********************************* */
 /**

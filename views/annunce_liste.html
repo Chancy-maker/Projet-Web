@@ -1,17 +1,23 @@
 {{ > header}}
 
-<h1>Liste des annonces du site</h1>
+<h1>Les annonces actules</h1>
 
+<div class="row"></div>
 {{#annunces_list}}
 
-title : {{title}}<br>
-Entreprise : {{name}} <br>
-salary : {{salary}}<br>
-type_of_job : {{type_of_job}}
-<a href="/read/{{id_annunce}}">Détail annonces </a><br>
-<a href="#">postuler</a><br>
+    <div class="col m-3">
+ <div class="card h-100" style="width: 18rem;">
+<div>
+<h5 class="card-title">title : {{title}}</h5><br></div>
+<h6  class="card-subtitle "> Entreprise : {{name}}</h6>  <br>
+<h6 class="card-subtitle">salary : {{salary}}</h6><br>
+<h6  class="card-subtitle ">type_of_job : {{type_of_job}}</h6>
+<p class="card-text" style="height: 4rem;" href="/read/{{id_annunce}}">Détail annonces </p><br>
+<a class="btn btn-primary btn-sm" href="#">postuler</a><br>
+    </div>
+</div>
 
 {{/annunces_list}}
-
+</div>
 
 {{> footer}}
