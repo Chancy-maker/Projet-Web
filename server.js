@@ -123,7 +123,7 @@ app.get('/update/:id_annunce',is_authenticated, (req, res) =>{
  */
 app.get('/delete/:id_annunce',is_authenticated, (req, res) =>{
     let entry = model.read(req.params.id_annunce);
-    res.render('delete', {id_annunce: req.params.id_annunce, title: entry.title});
+    res.render('delete', {id_annunce: req.params.id_annunce, a : entry});
   });
 
 
@@ -184,6 +184,8 @@ app.get('/student_space', (req, res) =>{
    res.render('apply', {id_annunce : req.params.id_annunce, annunece : annonce});
  })
 
+ 
+
 
 /******************Routs pour modifier les données****************** */
 
@@ -200,12 +202,17 @@ app.post('/update/:id_annunce', (req, res) =>{
 
 app.post('/delete/:id_annunce', (req, res) =>{
     model.delete(req.params.id_annunce);
-  res.redirect('company_space');
+  res.render('company_space');
 })
 
 app.post('/apply/:id_annunce', (req, res) =>{
   let apply = model.postuler(req.session.student,req.params.id_annunce, req.body.adress, req.body.telephone, req.body.cv, req.body.motivation_letter);
   res.redirect('/')
+})
+
+app.post('/search', (req, res) =>{
+  let annonces = model.search(req.body.activity_area);
+  res.render('search', {bon : annonces})
 })
 
 app.post('/student_login', (req, res) =>{
@@ -234,7 +241,7 @@ app.post('/company_login', (req, res) =>{
 app.post('/student_new_user', (req, res) =>{
     const user = model.student_new_user(req.body.first_name, req.body.last_name, req.body.mail, req.body.password);
   if (user != -1) {
-    req.session.user = user;
+    req.session.student = user;
     req.session.name = req.body.mail;
     res.redirect('/');
   } else {
@@ -244,9 +251,9 @@ app.post('/student_new_user', (req, res) =>{
 
 app.post('/company_new_user', (req, res) =>{
   const user = model.company_new_user(req.body.name, req.body.identifiant, req.body.password, req.body.website, req.body.activity_area, req.body.address);
-  console.log(user.id_company);
+  console.log(user);
 if (user != -1) {
-  req.session.user = user;
+  req.session.company = user;
   req.session.name = req.body.identifiant;
   res.redirect('/');
 } else {

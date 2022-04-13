@@ -114,8 +114,13 @@ exports.delete = function(id_annunce) {
  */
  exports.student_new_user = (first_name, last_name, mail, password) =>{
     let student = db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES (?,?, ?, ?)").run(first_name, last_name, mail, password);
-    return student.changes > 0;
+    if(student.changes > 0){
+      return student.lastInsertRowid;
+  }else{
+      return -1;
   }
+  }
+
 
   /**
    * La fonction studen verifie si le mail et le mot de passe mis en paramètre sont celle d'un des utilisateur (Etudian).
@@ -149,8 +154,13 @@ exports.delete = function(id_annunce) {
  */
  exports.company_new_user = (name, identifiant, password, website, activity_area, address) =>{
     let company = db.prepare("INSERT INTO company (name, identifiant, password, website, activity_area, address) VALUES (?,?, ?, ?,?,?)").run(name, identifiant, password, website, activity_area, address);
-    return company.changes > 0;
+    if(company.changes > 0){
+      return company.lastInsertRowid;
+  }else{
+      return -1;
   }
+  }
+  
 
   /**
    * La fonction company_login verifie si l'identifiant et le mot de passe mis en paramètre sont celle d'un des utilisateur (Entreprise).
@@ -225,3 +235,15 @@ exports.delete = function(id_annunce) {
     if(!student_annunces_postulate) return -1;
     return student_annunces_postulate
   }
+
+  exports.search = function(activity_area){
+    let annunces = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE company.activity_area = ? ').all(activity_area);
+    if(!annunces) return -1;
+    return annunces;
+  } 
+
+  exports.title_search = function(activity_area){
+    let annunces = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE  annunce.title = ? ').all(activity_area);
+    if(!annunces) return -1;
+    return annunces;
+  } 
