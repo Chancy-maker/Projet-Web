@@ -1,7 +1,6 @@
 {{ > header}}
 
-<h1>Dans cette vues on aura l'ensemble des annonces qu'une entreprise aura créé avec la possibilité de les modifier, de les supprimé et 
-  d'en créer. </h1>
+<h1> Vos annonces </h1>
 
 <div class="row">
     {{#company_annunces}}
@@ -13,6 +12,8 @@
           salary : {{salary}}<br>
           type_of_job : {{type_of_job}}<br>
           description : {{description}}<br>
+          <a href="/update/{{id_annunce}}">Modifier</a> <br>
+          <a href="/delete/{{id_annunce}}">Supprimer</a>
           
         </div>
     </div>

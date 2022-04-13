@@ -43,4 +43,4 @@ db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES (
 
 //Création de la table posulate
 db.prepare("DROP TABLE IF EXISTS postulate").run();
-db.prepare("CREATE TABLE postulate (id_postulate INTEGER PRIMARY KEY AUTOINCREMENT, id_annunce INTEGER, id_student INTEGER)").run();
+db.prepare("CREATE TABLE postulate (id_postulate INTEGER PRIMARY KEY AUTOINCREMENT, id_annunce INTEGER, id_student INTEGER, address TEXT, telephone TEXT, cv blob, motivation_letter TEXT)").run();

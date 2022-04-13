@@ -10,12 +10,13 @@ const cookieSession = require('cookie-session');
 
 // parse form arguments in POST request
 const bodyParser = require('body-parser');
-
 app.use(bodyParser.urlencoded({extended : false}));
 
 app.engine('html', mustache());
 app.set('view engine', 'html');
 app.set('views', './views');
+
+let a = model.update(4,'Boulanger', '1500', 'Developpeur', 'bonjour');
 
 /************Routes pour voir les page du site************/
 
@@ -40,7 +41,7 @@ app.use(cookieSession ({
  * @param {*} next
  */
  function is_authenticated(req, res, next) {
-    if (req.session.user === undefined) {
+    if (req.session.company === undefined) {
       res.status(401).send("You can not create à annunce");
       
     }return next();
@@ -111,7 +112,9 @@ app.get('/create',is_authenticated, (req, res) =>{
  * Retourner le formulaire de modification
  */
 app.get('/update/:id_annunce',is_authenticated, (req, res) =>{
+  
     let entry = model.read(req.params.id_annunce);
+    console.log(entry)
     res.render('update', entry);
 });
 
@@ -169,11 +172,16 @@ app.get('/student_space', (req, res) =>{
   * Retourne L'espace personnel des entreprises
   */
  app.get('/company_space', (req, res) =>{
-   res.render('company_space', {company_annunces : model.company_annunces(req.session.user)});
+   res.render('company_space', {company_annunces : model.company_annunces(req.session.company)});
  })
 
  app.get('/annunce_liste', (req, res) =>{
    res.render('annunce_liste', {annunces_list : model.list()})
+ })
+
+ app.get('/apply/:id_annunce', (req, res) =>{
+   let annonce = model.read(req.params.id_annunce);
+   res.render('apply', {id_annunce : req.params.id_annunce, annunece : annonce});
  })
 
 
@@ -181,8 +189,7 @@ app.get('/student_space', (req, res) =>{
 
 
 app.post('/create', (req, res) =>{
-  console.log(req.session.user);
-    let id_annunce = model.create(req.body.title, req.body.salary, req.body.type_of_job, req.body.description,req.session.user )
+    let id_annunce = model.create(req.body.title, req.body.salary, req.body.type_of_job, req.body.description,req.session.company )
     res.redirect('/read/' + id_annunce);
 })
 
@@ -193,19 +200,18 @@ app.post('/update/:id_annunce', (req, res) =>{
 
 app.post('/delete/:id_annunce', (req, res) =>{
     model.delete(req.params.id_annunce);
-  res.redirect('/');
+  res.redirect('company_space');
+})
+
+app.post('/apply/:id_annunce', (req, res) =>{
+  let apply = model.postuler(req.session.student,req.params.id_annunce, req.body.adress, req.body.telephone, req.body.cv, req.body.motivation_letter);
+  res.redirect('/')
 })
 
 app.post('/student_login', (req, res) =>{
     const user = model.studen_login(req.body.mail, req.body.password);
-    
-   
     if (user != -1) {
-      
     req.session.student = user;
-
-    console.log(user)
-    console.log(req.session.student)
     req.session.name = req.body.mail;
     res.redirect('/');
   } else {
@@ -214,7 +220,6 @@ app.post('/student_login', (req, res) =>{
 }) 
 app.post('/company_login', (req, res) =>{
     const user = model.company_login(req.body.identifiant, req.body.password);
-    
     if (user != -1) {
     req.session.company = user;
     req.session.name = req.body.identifiant;

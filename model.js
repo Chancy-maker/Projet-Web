@@ -24,8 +24,7 @@ Elle renvoie une annonce sous la forme d'un objet :
 Cette fonction renvoie null si l'identifiant n'existe pas.
  */
 exports.read = (id_annunce) => {
-    let found = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE annunce.id_company = ?').get(id_annunce);
-    console.log(found)
+    let found = db.prepare('SELECT * FROM annunce WHERE id_annunce = ?').get(id_annunce);
     if(found !== undefined) {
       return found;
     } else {
@@ -176,11 +175,31 @@ exports.delete = function(id_annunce) {
     return company_annunces;
   }
 
+  
+  
+
+  /****************************Fonction relative à l'administrateur****************************** */
+
   /**
+   * La fonction administrator_login verifie si l'identifiant et le mot de passe mis en paramètre sont celle de l'administrateur.
+   * Elle retourne l'id de l'administrateur
+   * @param {*} identifiant 
+   * @param {*} password 
+   * @returns 
+   */
+  exports.administrator_login = (identifiant, password)=>{
+    let admin = db.prepare("SELECT * FROM administrator WHERE identifiant = ? AND password=?").get(identifiant, password);
+    // return user? user.rowid: -1;
+    if(!admin) return -1;
+     return admin.id_administrator; // return l'id de l'utilisateur;
+  }
+
+/**********************Fonctioin relative au postulation*********************** */
+/**
    * Cette fonction d'ajouter à la postulate un couple de postulatin (étudiant, annonce)
    */
-exports.postuler = function(id_student, id_annunce){
-  let add = db.prepare("INSERT INTO postulate (id_student, id_annunce) VALUES (?,?)").run(id_student,id_annunce);
+ exports.postuler = function(id_student, id_annunce,address,telephone, cv,motivation_letter){
+  let add = db.prepare("INSERT INTO postulate (id_student, id_annunce, address, telephone, cv, motivation_letter) VALUES (?,?,?,?,?,?)").run(id_student,id_annunce, address, telephone, cv, motivation_letter);
   if(add.changes > 0){
     return add.lastInsertRowid;
     }else{
@@ -206,21 +225,3 @@ exports.postuler = function(id_student, id_annunce){
     if(!student_annunces_postulate) return -1;
     return student_annunces_postulate
   }
-  
-
-  /****************************Fonction relative à l'administrateur****************************** */
-
-  /**
-   * La fonction administrator_login verifie si l'identifiant et le mot de passe mis en paramètre sont celle de l'administrateur.
-   * Elle retourne l'id de l'administrateur
-   * @param {*} identifiant 
-   * @param {*} password 
-   * @returns 
-   */
-  exports.administrator_login = (identifiant, password)=>{
-    let admin = db.prepare("SELECT * FROM administrator WHERE identifiant = ? AND password=?").get(identifiant, password);
-    // return user? user.rowid: -1;
-    if(!admin) return -1;
-     return admin.id_administrator; // return l'id de l'utilisateur;
-  }
-
