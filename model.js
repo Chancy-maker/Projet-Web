@@ -24,7 +24,7 @@ Elle renvoie une annonce sous la forme d'un objet :
 Cette fonction renvoie null si l'identifiant n'existe pas.
  */
 exports.read = (id_annunce) => {
-    let found = db.prepare('SELECT * FROM annunce WHERE id_annunce = ?').get(id_annunce);
+    let found = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE id_annunce = ?').get(id_annunce);
     if(found !== undefined) {
       return found;
     } else {
