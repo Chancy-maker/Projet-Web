@@ -1,19 +1,25 @@
 {{ > header}}
 
-<h1>Formulaire de connexion étudiant</h1>
-<div class="container">
-    <form action="/student_login" method="post">
+<div class="d-flex justify-content-md-center align-items-center vh-100">
+    <div>
+        <div style="width: 700px;">
+            <h2>connecter vous en tant qu'étudiant</h2>
+            <br>
+    <form action="/student_login" method="post"> 
         <div class="form-group">
         <label for="mail">mail </label>
-         <input type="text"  id="mail" name="mail" value="" size="50"> <br>
+        <input type="text" class="form-control" placeholder="entrez votre email"  id="mail" name="mail" value="" size="50">  <br>
         </div>
 
         <div class="form-group">
-         <label for="password">password</label>
-        <input type="text" id="password" name="password" value="" size="50"><br>
-    </div>
+        <label for="password">password</label>
+        <input type="text" class="form-control" placeholder="password" id="password" name="password" value="" size="50"><br>
+        </div>
 
-        <input id="connexion" type="submit" class="btn btn-primary" value="Connexion"> </div>
-    </form>
+        <input id="connexion" type="submit" class="btn btn-primary" value="Connexion">
+   </form>
 </div>
+</div>
+</div>
+
 {{> footer}}

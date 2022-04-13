@@ -1,12 +1,17 @@
 {{ > header}}
 
-<h1> Supprimer une annonce </h1>
+<div class="d-flex justify-content-md-center align-items-center vh-100" >
+<div>
+<div style="width: 700px;">
+    <h2> Supprimer une annonce </h2>
     Voulez-vous vraiment supprimer "{{title}}" ?
     <form action="/">
-        <input type="submit" value="Annuler">
+        <input  type="submit" value="Annuler">
         </form>
     <form action="/delete/{{id_annunce}}" method="post">
         <input type="submit" value="Supprimer">
     </form>
-
+</div>
+</div>
+</div>
 {{> footer}}

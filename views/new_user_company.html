@@ -1,33 +1,38 @@
 {{ > header}}
 
-<h1>Formulaire de création de compte (entreprise) </h1>
-<div class="container">
+<div class="d-flex justify-content-md-center align-items-center vh-100">
+    <div>
+    <div style="width: 700px;">
+        <h2>Creer votre compte entreprise </h2>
+        <br>
     <form action="/company_new_user" method="post">
         <div class="form-group">
         <label for="name">name</label>
-         <input type="text"  id="name" name="name" value="" size="50"> <br>
+         <input type="text" class="form-control" placeholder="Votre Nom" id="name" name="name" value="" size="50"> <br>
         </div>
         <div class="form-group">
          <label for="identifiant">identifiant </label>
-        <input type="text" id="identifiant" name="identifiant" value="" size="50"><br>
+        <input type="text" class="form-control" placeholder="identifiant" id="identifiant" name="identifiant" value="" size="50"><br>
         </div>
         <div class="form-group">
         <label for="password">password </label>
-         <input type="text"  id="password" name="password" value="" size="50"><br>
+         <input type="text" class="form-control" placeholder="Password"  id="password" name="password" value="" size="50"><br>
         </div>
         <div class="form-group">>
         <label for="website">website </label>
-        <input type="text" id="website" name="website" value="" size="50"><br>
+        <input type="text" class="form-control" placeholder="le Website de l'entreprise " id="website" name="website" value="" size="50"><br>
         </div>
         <div class="form-group">
         <label for="activity_area">activity_area</label>
-        <input type="text"  id="activity_area" name="activity_area" value="" size="70"><br>
+        <input type="text" class="form-control" placeholder="Activité"  id="activity_area" name="activity_area" value="" size="70"><br>
         </div>
         <div class="form-group">
        <label for="address">address</label>
-       <input type="text"  id="address" name="address" value="" size="70"><br>
+       <input type="text" class="form-control" placeholder="address" id="address" name="address" value="" size="70"><br>
         </div>
         <input id="inscription" type="submit" class="btn btn-primary" value="inscription"> 
     </form>
+</div>
+</div>
 </div>
 {{> footer}}

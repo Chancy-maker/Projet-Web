@@ -1,33 +1,43 @@
 {{ > header}}
 
-<h1>Créer votre annonce</h1>
+<div class="d-flex justify-content-md-center align-items-center vh-100">
 <div>
+<div style="width: 700px;" >
+    <h2>Créer votre annonce</h2>
+    <br>
+
     <form action="/create" method="post">
 
         <div class="form-group">
         <label for="title">Titre </label>
-        <input type="text" class="form-control" id="title" name="title" value="" size="50" > <br>
+        <input type="text" class="form-control" placeholder="titre de l'annonce" id="title" name="title" value="" size="50" > <br>
         </div>
 
         <div class="form-group" >
         <label for="salary">salary </label>
-        <input type="text" class="form-control" id="salary" name="salary" value="" size="50"><br>
+        <input type="text" class="form-control" placeholder="Salaire" id="salary" name="salary" value="" size="50"><br>
         </div>
 
         <div class="form-group" >
         <label for="type_of_job">type_of_job </label>
-        <input type="text" class="form-control"  id="type_of_job" name="type_of_job" value="" size="50"><br>
+        <input type="text" class="form-control" placeholder="type de job" id="type_of_job" name="type_of_job" value="" size="50"><br>
         </div>
 
         <div class="form-group">
         <label for="description">description </label>
+<<<<<<< HEAD
         <textarea rows="-10" type="text" class="form-control" id="description" name="description" value="" size="10">
         </textarea><br>
+=======
+        <input type="text" class="form-control" placeholder="Description" id="description" name="description" value="" size="10"><br>
+>>>>>>> 1c88b11ad39c08918f50cbccd461c1223653e1ee
         </div>
 
 
         <input id="annonce" class="btn btn-primary" type="submit" value="Créer une nouvelle annonce"> </div>
     </form>
+</div>
+</div>
 </div>
 
 {{> footer}}

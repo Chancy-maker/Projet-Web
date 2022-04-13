@@ -1,7 +1,10 @@
 {{ > header}}
 
- <h1>Vous etes une entreprise</h1>
-<div class="container">
+<div class="d-flex justify-content-md-center align-items-center vh-100">
+    <div>
+        <div style="width: 700px;" >
+            <h2>Connectez vous en tant qu'entreprise</h2>
+            <br>
     <form action="/company_login" method="post" >
         <div class="form-group">
         <label for="identifiant">identifiant </label>
@@ -14,7 +17,9 @@
         </div>
 
 
-        <input id="connexion" type="submit" class="btn btn-primary" value="Connexion"> </div>
+        <input id="connexion" type="submit" class="btn btn-primary" value="Connexion"> 
     </form>
+</div>
+</div>
 </div>
 {{> footer}}
