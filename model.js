@@ -206,7 +206,7 @@ exports.delete = function(id_annunce) {
 
 /**********************Fonctioin relative au postulation*********************** */
 /**
-   * Cette fonction d'ajouter à la postulate un couple de postulatin (étudiant, annonce)
+   * Cette fonction permet de créer un postulation
    */
  exports.postuler = function(id_student, id_annunce,address,telephone, cv,motivation_letter){
   let add = db.prepare("INSERT INTO postulate (id_student, id_annunce, address, telephone, cv, motivation_letter) VALUES (?,?,?,?,?,?)").run(id_student,id_annunce, address, telephone, cv, motivation_letter);
@@ -222,19 +222,27 @@ exports.delete = function(id_annunce) {
    * Cette fonction retourne La liste des étudiants ayant postulé pour une annonce.
    */
   exports.student_annunces_postulates = function(id_annunce){
-    let student_annunces_postulate = db.prepare("SELECT * FROM student INNER JOIN postulate ON student.id_student = postulate.id_student WHERE id_annunce = ?").get(id_annunce);
-    if(!student_annunces_postulate) return -1;
+    let student_annunces_postulate = db.prepare("SELECT * FROM student INNER JOIN postulate ON student.id_student = postulate.id_student WHERE postulate.id_annunce = ?").all(id_annunce);
+    if(student_annunces_postulate.length < 1) return -1;
     return student_annunces_postulate
    }
-  
-  /**
-   * Cette fonction retourne la liste des annonces postulé par un étudiant
-   */
-  exports.annunces_tudent_postulates = function(id_student){
-    let student_annunces_postulate = db.prepare("SELECT * FROM annunce INNER JOIN postulate ON annunce.id_annunce = postulate.id_annunce WHERE id_student = ?").get(id_student);
+
+   /**
+    * Cette fonction retourne  étudiant ayant postulé à l'annonce de l'id mis en paramètre
+    * @param {*} id_annunce 
+    * @returns 
+    */
+   exports.student_annunce_postulate = function(id_student){
+    let student_annunces_postulate = db.prepare("SELECT * FROM student INNER JOIN postulate ON student.id_student = postulate.id_student WHERE postulate.id_student = ?").get(id_student);
     if(!student_annunces_postulate) return -1;
-    return student_annunces_postulate
-  }
+    return student_annunces_postulate;
+   }
+  
+ /**
+  * Cette fonction permet d'éffectuer des recherche avec le secteur d'activité des entreprises
+  * @param {*} activity_area 
+  * @returns 
+  */
 
   exports.search = function(activity_area){
     let annunces = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE company.activity_area = ? ').all(activity_area);
@@ -242,8 +250,14 @@ exports.delete = function(id_annunce) {
     return annunces;
   } 
 
-  exports.title_search = function(activity_area){
-    let annunces = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE  annunce.title = ? ').all(activity_area);
-    if(!annunces) return -1;
-    return annunces;
-  } 
+  exports.postulation = function(id_annunce, id_student){
+    
+    let postulation = db.prepare('SELECT * FROM postulate WHERE id_annunce = ? AND id_student=?').get(id_annunce,id_student);
+    
+    if(!postulation){
+      return -1;
+    }else{
+      return postulation;
+    }
+  }
+

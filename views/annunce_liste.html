@@ -7,9 +7,11 @@
 title : {{title}}<br>
 Entreprise : {{name}} <br>
 salary : {{salary}}<br>
-type_of_job : {{type_of_job}}
+type_of_job : {{type_of_job}}<br>
 <a href="/read/{{id_annunce}}">Détail annonces </a><br>
+{{^company}}
 <a href="/apply/{{id_annunce}}">postuler</a><br>
+{{/company}}
 
 {{/annunces_list}}
 

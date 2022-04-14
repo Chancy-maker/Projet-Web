@@ -48,6 +48,10 @@ app.use(cookieSession ({
     
   }
 
+  function postulate(req,res, next){
+
+  }
+
 
 
 // middleware qui ajoute deux variables de session aux templates : authenticated et le nom de l'utilisateur
@@ -72,11 +76,6 @@ function student(req, res, next) {
   
   app.use(student);
   app.use(company);
-
-
-
-
-  
 
 /**
  * Renvoie la page d'accueil du site
@@ -112,9 +111,7 @@ app.get('/create',is_authenticated, (req, res) =>{
  * Retourner le formulaire de modification
  */
 app.get('/update/:id_annunce',is_authenticated, (req, res) =>{
-  
     let entry = model.read(req.params.id_annunce);
-    console.log(entry)
     res.render('update', entry);
 });
 
@@ -180,10 +177,28 @@ app.get('/student_space', (req, res) =>{
  })
 
  app.get('/apply/:id_annunce', (req, res) =>{
-   let annonce = model.read(req.params.id_annunce);
-   res.render('apply', {id_annunce : req.params.id_annunce, annunece : annonce});
+   let postul = model.postulation(req.params.id_annunce, req.session.student);
+   if(postul == -1){
+    let annonce = model.read(req.params.id_annunce);
+    res.render('apply', {id_annunce : req.params.id_annunce, annunece : annonce});
+    
+   }else{
+    res.status(401).send("vous avez déjà postuler à cette annonce");
+   }
  })
+ app.get('/postulation/:id_annunce', (req, res) =>{
+   annonce_postuler =  model.student_annunces_postulates(req.params.id_annunce);
+   if(annonce_postuler == -1){
+    res.status(401).send("Il n'y a pas de postulation pour cette annonce");
+   }else{
+   res.render('postulation', {postulate_annunces : annonce_postuler});
+   }
+   })
 
+ app.get('/student/:id_student', (req, res) =>{
+  annonce_postule =  model.student_annunce_postulate(req.params.id_student);
+   res.render('student', { student_post : annonce_postule});
+ })
  
 
 
@@ -206,8 +221,8 @@ app.post('/delete/:id_annunce', (req, res) =>{
 })
 
 app.post('/apply/:id_annunce', (req, res) =>{
-  let apply = model.postuler(req.session.student,req.params.id_annunce, req.body.adress, req.body.telephone, req.body.cv, req.body.motivation_letter);
-  res.redirect('/')
+  model.postuler(req.session.student,req.params.id_annunce, req.body.adress, req.body.telephone, req.body.cv, req.body.motivation_letter);
+  res.render( 'annunce_liste', {annunces_list : model.list()})
 })
 
 app.post('/search', (req, res) =>{
@@ -219,6 +234,7 @@ app.post('/student_login', (req, res) =>{
     const user = model.studen_login(req.body.mail, req.body.password);
     if (user != -1) {
     req.session.student = user;
+    console.log(req.session.student);
     req.session.name = req.body.mail;
     res.redirect('/');
   } else {
@@ -251,7 +267,6 @@ app.post('/student_new_user', (req, res) =>{
 
 app.post('/company_new_user', (req, res) =>{
   const user = model.company_new_user(req.body.name, req.body.identifiant, req.body.password, req.body.website, req.body.activity_area, req.body.address);
-  console.log(user);
 if (user != -1) {
   req.session.company = user;
   req.session.name = req.body.identifiant;
