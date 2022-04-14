@@ -24,8 +24,7 @@ Elle renvoie une annonce sous la forme d'un objet :
 Cette fonction renvoie null si l'identifiant n'existe pas.
  */
 exports.read = (id_annunce) => {
-    let found = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE annunce.id_company = ?').get(id_annunce);
-    console.log(found)
+    let found = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE id_annunce = ?').get(id_annunce);
     if(found !== undefined) {
       return found;
     } else {
@@ -126,8 +125,13 @@ exports.delete = function(id_annunce) {
  */
  exports.student_new_user = (first_name, last_name, mail, password) =>{
     let student = db.prepare("INSERT INTO student (first_name, last_name, mail, password) VALUES (?,?, ?, ?)").run(first_name, last_name, mail, password);
-    return student.changes > 0;
+    if(student.changes > 0){
+      return student.lastInsertRowid;
+  }else{
+      return -1;
   }
+  }
+
 
   /**
    * La fonction studen verifie si le mail et le mot de passe mis en paramètre sont celle d'un des utilisateur (Etudian).
@@ -161,8 +165,13 @@ exports.delete = function(id_annunce) {
  */
  exports.company_new_user = (name, identifiant, password, website, activity_area, address) =>{
     let company = db.prepare("INSERT INTO company (name, identifiant, password, website, activity_area, address) VALUES (?,?, ?, ?,?,?)").run(name, identifiant, password, website, activity_area, address);
-    return company.changes > 0;
+    if(company.changes > 0){
+      return company.lastInsertRowid;
+  }else{
+      return -1;
   }
+  }
+  
 
   /**
    * La fonction company_login verifie si l'identifiant et le mot de passe mis en paramètre sont celle d'un des utilisateur (Entreprise).
@@ -187,36 +196,7 @@ exports.delete = function(id_annunce) {
     return company_annunces;
   }
 
-  /**
-   * Cette fonction d'ajouter à la postulate un couple de postulatin (étudiant, annonce)
-   */
-exports.postuler = function(id_student, id_annunce){
-  let add = db.prepare("INSERT INTO postulate (id_student, id_annunce) VALUES (?,?)").run(id_student,id_annunce);
-  if(add.changes > 0){
-    return add.lastInsertRowid;
-    }else{
-    return -1;
-  }
-}
-
-
-  /**
-   * Cette fonction retourne La liste des étudiants ayant postulé pour une annonce.
-   */
-  exports.student_annunces_postulates = function(id_annunce){
-    let student_annunces_postulate = db.prepare("SELECT * FROM student INNER JOIN postulate ON student.id_student = postulate.id_student WHERE id_annunce = ?").get(id_annunce);
-    if(!student_annunces_postulate) return -1;
-    return student_annunces_postulate
-   }
   
-  /**
-   * Cette fonction retourne la liste des annonces postulé par un étudiant
-   */
-  exports.annunces_tudent_postulates = function(id_student){
-    let student_annunces_postulate = db.prepare("SELECT * FROM annunce INNER JOIN postulate ON annunce.id_annunce = postulate.id_annunce WHERE id_student = ?").get(id_student);
-    if(!student_annunces_postulate) return -1;
-    return student_annunces_postulate
-  }
   
 
   /****************************Fonction relative à l'administrateur****************************** */
@@ -233,5 +213,62 @@ exports.postuler = function(id_student, id_annunce){
     // return user? user.rowid: -1;
     if(!admin) return -1;
      return admin.id_administrator; // return l'id de l'utilisateur;
+  }
+
+/**********************Fonctioin relative au postulation*********************** */
+/**
+   * Cette fonction permet de créer un postulation
+   */
+ exports.postuler = function(id_student, id_annunce,address,telephone, cv,motivation_letter){
+  let add = db.prepare("INSERT INTO postulate (id_student, id_annunce, address, telephone, cv, motivation_letter) VALUES (?,?,?,?,?,?)").run(id_student,id_annunce, address, telephone, cv, motivation_letter);
+  if(add.changes > 0){
+    return add.lastInsertRowid;
+    }else{
+    return -1;
+  }
+}
+
+
+  /**
+   * Cette fonction retourne La liste des étudiants ayant postulé pour une annonce.
+   */
+  exports.student_annunces_postulates = function(id_annunce){
+    let student_annunces_postulate = db.prepare("SELECT * FROM student INNER JOIN postulate ON student.id_student = postulate.id_student WHERE postulate.id_annunce = ?").all(id_annunce);
+    if(student_annunces_postulate.length < 1) return -1;
+    return student_annunces_postulate
+   }
+
+   /**
+    * Cette fonction retourne  étudiant ayant postulé à l'annonce de l'id mis en paramètre
+    * @param {*} id_annunce 
+    * @returns 
+    */
+   exports.student_annunce_postulate = function(id_student){
+    let student_annunces_postulate = db.prepare("SELECT * FROM student INNER JOIN postulate ON student.id_student = postulate.id_student WHERE postulate.id_student = ?").get(id_student);
+    if(!student_annunces_postulate) return -1;
+    return student_annunces_postulate;
+   }
+  
+ /**
+  * Cette fonction permet d'éffectuer des recherche avec le secteur d'activité des entreprises
+  * @param {*} activity_area 
+  * @returns 
+  */
+
+  exports.search = function(activity_area){
+    let annunces = db.prepare('SELECT * FROM annunce INNER JOIN company ON annunce.id_company = company.id_company WHERE company.activity_area = ? ').all(activity_area);
+    if(!annunces) return -1;
+    return annunces;
+  } 
+
+  exports.postulation = function(id_annunce, id_student){
+    
+    let postulation = db.prepare('SELECT * FROM postulate WHERE id_annunce = ? AND id_student=?').get(id_annunce,id_student);
+    
+    if(!postulation){
+      return -1;
+    }else{
+      return postulation;
+    }
   }
 
