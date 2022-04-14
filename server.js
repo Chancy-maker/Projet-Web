@@ -16,7 +16,7 @@ app.engine('html', mustache());
 app.set('view engine', 'html');
 app.set('views', './views');
 
-let a = model.update(4,'Boulanger', '1500', 'Developpeur', 'bonjour');
+
 
 /************Routes pour voir les page du site************/
 
