@@ -1,20 +1,19 @@
 {{ > header}}
 
-<h1> Vos annonces </h1>
+<h1 align="center"> Vos annonces </h1><br>
 
 <div class="row">
     {{#company_annunces}}
     <div class="col mb-3">
       <div class="card h-100" style="width: 18rem;">
-        <div>
-          
-          title : {{title}}<br>
-          salary : {{salary}}<br>
-          type_of_job : {{type_of_job}}<br>
-          <a href="/read/{{id_annunce}}">Description</a><br>
-          <a href="/update/{{id_annunce}}">Modifier</a> <br>
-          <a href="/delete/{{id_annunce}}">Supprimer</a><br>
-          <a href="/postulation/{{id_annunce}}">Postulation</a><br>
+        <div align="center">
+          <h5 class="card-title"> title : {{title}}</h5><br>
+          <h6 class="card-subtitle">salary : {{salary}}</h6><br>
+          <h6  class="card-subtitle ">type_of_job : {{type_of_job}}</h6><br>
+          <a class="btn btn-link" href="/read/{{id_annunce}}">Description</a><br>
+          <a class="btn btn-warning" href="/update/{{id_annunce}}">Modifier</a> 
+          <a class="btn btn-danger" href="/delete/{{id_annunce}}">Supprimer</a>
+          <a class="btn btn-primary" href="/postulation/{{id_annunce}}">Postulation</a>
           
         </div>
     </div>
