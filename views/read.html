@@ -1,15 +1,18 @@
 {{ > header}}
-
-
-
-
-<h1> Détails de l'annonce</h1>
-title : {{title}}<br>
-Entreprise : {{name}}<br>
-salary : {{salary}}<br>
-type_of_job : {{type_of_job}}<br>
+<h1 align="center" > Détails de l'annonce</h1> <br>
+<div class="row">
+    
+        <div class="card h-auto" style="width: auto;">
+        <div align="center">
+            <h5 class="card-title"> {{title}}</h5><br>
+                <h6  class="card-subtitle ">Entreprise : {{name}}</h6><br>
+                    <h6 class="card-subtitle">salary : {{salary}}</h6><br>
+                        <h6 class="card-subtitle">type_of_job : {{type_of_job}} </h6><br>
 <br>
 description : {{description}}<br>
+                    </div>
+        </div>
+    </div>
 
 
 {{> footer}}

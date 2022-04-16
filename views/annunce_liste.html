@@ -7,11 +7,11 @@
 <div class="col m-3">
 <div class="card h-100" style="width: 18rem;">
 <div align="center">
-<h5 class="card-title">title : {{title}}</h5><br>
+<h5 class="card-title"> {{title}}</h5><br>
 <h6  class="card-subtitle "> Entreprise : {{name}}</h6>  <br>
 <h6 class="card-subtitle">salary : {{salary}}</h6><br>
 <h6  class="card-subtitle ">type_of_job : {{type_of_job}}</h6>
-<p class="card-text" style="height: 4rem;" href="/read/{{id_annunce}}">Détail annonces </p><br>
+<a class="card-text" style="height: 4rem;" href="/read/{{id_annunce}}">Détail annonces </a><br>
 {{^company}}
 <a class="btn btn-primary btn-sm" href="/apply/{{id_annunce}}">postuler</a><br>
 {{/company}}

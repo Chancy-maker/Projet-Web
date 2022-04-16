@@ -1,12 +1,19 @@
 {{ >header}}
+<h1 align="center" >annonces trouves</h1> <br>
+<div class="row">
     {{#bon}}
-
-    title : {{title}}<br>
-    Entreprise : {{name}} <br>
-    salary : {{salary}}<br>
-    type_of_job : {{type_of_job}}
-    <a href="/read/{{id_annunce}}">Détail annonces </a><br>
-    <a href="/apply/{{id_annunce}}">postuler</a><br>
-
+        <div class="col m-3">
+            <div class="card h-100" style="width: 18rem;">
+            <div align="center">
+                <h5 class="card-title"> {{title}} </h5> <br>
+                <h6  class="card-subtitle ">Entreprise : {{name}} </h6> <br>
+                <h6 class="card-subtitle">salary : {{salary}}</h6><br>
+                <h6  class="card-subtitle ">type_of_job : {{type_of_job}} </h6><br>
+    <a class="card-text" style="height: 4rem;" href="/read/{{id_annunce}}">Détail annonces </a><br>
+    <a class="btn btn-primary btn-sm" href="/apply/{{id_annunce}}">postuler</a><br>
+            </div>
+            </div>
+        </div>
     {{/bon}}
+</div>
 {{ >footer}}

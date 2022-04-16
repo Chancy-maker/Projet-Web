@@ -3,11 +3,88 @@
 
   <div class="jumbotron" >
     <div class="text-center" >
-    <h1>Student Opp</h1>
-    <h5>Solution pour trouver un Jobe Stage et commencer votre carriere proffetionelle</h5>
-    <div><img src="https://pixabay.com/get/g2d96c94b6c86f912bcc7e536f016794f68fb6aaec4bfc13142b674c37164e979dd48b37b26e4e4ed780e06752108b6f3_640.jpg"class="bg-image" alt="Responsive image"></div>
+    <h1 style="color:#0652DD; "><strong style="font-weight: bold;color: #0c2461;">Student </strong>Opp</h1>
+    <h5 style="color:#1B1464" >Solution pour trouver un Jobe Stage et commencer votre carriere proffetionelle</h5>
   </div>
   </div>
+  <div class="background-image"></div>
+
+
+
+  <div class="cookie-container">
+    <p>
+      <strong>À propos de l’utilisation des cookies sur ce site</strong>
+      <br>
+      Ce site utilise des cookies, y compris les cookies tierce partie, pour améliorer ses fonctionnalités et l’utilisation du site, mais aussi à des fins d’analytique web et de marketing ciblé. En continuant votre consultation sur ce site sans modifier les paramètres reliés aux cookies dans votre navigateur, vous acceptez l’utilisation que nous faisons des cookies.
+    </p>
+
+    <button class="cookie-btn">
+      J'accepte
+    </button>
+  </div>
+
+  <style>
+
+
+    .background-image {
+      background-image: url('https://www.aegide-international.com/wa_images/21404.jpg?v=1fh0qp8');
+      background-repeat: no-repeat;
+      background-size: cover;
+      height: 100vh;
+      margin: 0 auto;
+      padding: auto;
+    }
+.wrapper {
+  padding: 32px;
+}
+
+.cookie-container {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  background:#3c3c3d;
+  color: #f5f6fa;
+  padding: 0 32px;
+  box-shadow: 0 -2px 16px #3c3c3d;
+
+  transition: 400ms;
+}
+
+.cookie-container.active {
+  bottom: 0;
+}
+
+.cookie-container a {
+  color: #f5f6fa;
+}
+
+.cookie-btn {
+  background: #940000;
+  border: 0;
+  color: #f5f6fa;
+  padding: 12px 48px;
+  font-size: 18px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+  </style>
+  <script>
+const cookieContainer = document.querySelector(".cookie-container");
+const cookieButton = document.querySelector(".cookie-btn");
+
+cookieButton.addEventListener("click", () => {
+  cookieContainer.classList.remove("active");
+  localStorage.setItem("cookieBannerDisplayed", "true");
+});
+
+setTimeout(() => {
+  if (!localStorage.getItem("cookieBannerDisplayed")) {
+    cookieContainer.classList.add("active");
+  }
+}, 2000);
+  </script>
 
 
 

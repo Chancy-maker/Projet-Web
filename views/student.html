@@ -1,14 +1,23 @@
 {{ > header}}
-
+<div class="row">
     {{#student_post}}
-    Nom: {{first_name}}<br>
-    Prénom : {{last_name}} <br>
-    mail : {{mail}}<br>
-    Téléphone : {{telephone}} <br>
-    Adresse : {{address}} <br>
-    cv : {{cv}} <br><br>
+    <div class="col m-3">
+        <div class="card h-100" style="width: auto;">
+        <div align="center">
+            <h5 class="card-title">Nom: {{first_name}}</h5><br>
+                <h5 class="card-title"> Prénom : {{last_name}} </h5><br>
+                    <h6 class="card-subtitle">mail : {{mail}}</h6><br>
+                        <h6 class="card-subtitle">Téléphone : {{telephone}} </h6><br>
+                            <h6 class="card-subtitle">Adresse : {{address}} </h6><br>
+                                <h6 class="card-subtitle"> cv : {{cv}} </h6><br>
+                                    
+                    <br>
     motivation_letter : {{motivation_letter}} <br>
+        </div>
+        </div>
+    </div>
+    
     {{/student_post}}
 
-
+</div>
 {{ >footer}}
