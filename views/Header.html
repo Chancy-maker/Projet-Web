@@ -21,52 +21,52 @@
               {{^authenticated}}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="/" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Se connecter
+                <strong>Se connecter</strong> 
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/student_login">Student</a></li>
-                <li><a class="dropdown-item" href="/company_login">Company</a></li>
+                <li><a class="dropdown-item" href="/student_login"><strong>Student</strong> </a></li>
+                <li><a class="dropdown-item" href="/company_login"> <strong>Company</strong> </a></li>
               </ul>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Créer un compte
+                <strong>Créer un compte</strong> 
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/new_user_student">Student</a></li>
-                <li><a class="dropdown-item" href="/new_user_company">Company</a></li>
+                <li><a class="dropdown-item" href="/new_user_student"><strong>Student</strong> </a></li>
+                <li><a class="dropdown-item" href="/new_user_company"><strong>Company</strong> </a></li>
               </ul>
             </li>
             {{/authenticated}}
             {{#company}}
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/annunce_liste">Toutes les annonces</a>
+              <a class="nav-link active" aria-current="page" href="/annunce_liste"> <strong>Toutes les annonces</strong> </a>
             </li>
       
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/create">Créer une annonce</a>
+              <a class="nav-link active" aria-current="page" href="/create"> <strong>Créer une annonce</strong> </a>
             </li>  
                
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/logout">Se Déconnecter </a>
+              <a class="nav-link active" aria-current="page" href="/logout"> <strong>Se Déconnecter</strong>  </a>
             </li class="nav-item">
             <li>
-              <a class="nav-link active" aria-current="page" href="/company_space"> mon espace</a>
+              <a class="nav-link active" aria-current="page" href="/company_space"> <strong> mon espace</strong></a>
             </li>
             {{/company}}
             {{#student}}
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/annunce_liste">Toutes les annonces</a>
+              <a class="nav-link active" aria-current="page" href="/annunce_liste"> <strong>Toutes les annonces</strong> </a>
             </li>
        
                
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/logout">Se Déconnecter </a>
+              <a class="nav-link active" aria-current="page" href="/logout"> <strong>Se Déconnecter</strong>  </a>
             </li class="nav-item">
           </ul>
           <form action="/search" method="post" class="d-flex">
             <input class="form-control me-1" type="text" placeholder="Secteur d'activié" name="activity_area" id="activity_area" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-primary mb-7" type="submit">  Search</button>
           </form>      
           {{/student}}
         </div>
