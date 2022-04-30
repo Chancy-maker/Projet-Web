@@ -279,6 +279,6 @@ if (user != -1) {
 
 
 
-app.listen(1945, ()=>{
-    console.log("Server listening on port http://localhost:1945");
+app.listen(1940, ()=>{
+    console.log("Server listening on port http://localhost:1940");
 })
