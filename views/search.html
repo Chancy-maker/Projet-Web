@@ -1,4 +1,4 @@
-{{ >header}}
+{{ >Header}}
 <h1 align="center" style="color: #3e475d;" >annonces trouves</h1> <br>
 <div class="row">
     {{#bon}}
@@ -7,8 +7,8 @@
             <div align="center">
                 <h5 class="card-title"> {{title}} </h5> <br>
                 <h6  class="card-subtitle ">Entreprise : {{name}} </h6> <br>
-                <h6 class="card-subtitle">salary : {{salary}}</h6><br>
-                <h6  class="card-subtitle ">type_of_job : {{type_of_job}} </h6><br>
+                <h6 class="card-subtitle">Salaire : {{salary}}</h6><br>
+                <h6  class="card-subtitle ">Type de Contrat/job : {{type_of_job}} </h6><br>
     <a class="card-text" style="height: 4rem;" href="/read/{{id_annunce}}">Détail annonces </a><br>
     <a class="btn btn-primary btn-sm" href="/apply/{{id_annunce}}">postuler</a><br>
             </div>

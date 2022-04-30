@@ -1,4 +1,4 @@
-{{ > header}}
+{{ > Header}}
 
 <h1 align="center" style="color: #3e475d;" > Vos annonces </h1><br>
 
@@ -7,13 +7,13 @@
     <div class="col mb-3">
       <div class="card h-100" style="width: 18rem;">
         <div align="center">
-          <h5 class="card-title"> title : {{title}}</h5><br>
-          <h6 class="card-subtitle">salary : {{salary}}</h6><br>
-          <h6  class="card-subtitle ">type_of_job : {{type_of_job}}</h6><br>
+          <h5 class="card-title"> Titre : {{title}}</h5><br>
+          <h6 class="card-subtitle">Salaire : {{salary}}</h6><br>
+          <h6  class="card-subtitle ">Type de Contrat/job : {{type_of_job}}</h6><br>
           <a class="btn btn-link" href="/read/{{id_annunce}}">Description</a><br>
           <a class="btn btn-warning" href="/update/{{id_annunce}}">Modifier</a> 
           <a class="btn btn-danger" href="/delete/{{id_annunce}}">Supprimer</a>
-          <a class="btn btn-primary" href="/postulation/{{id_annunce}}">Postulation</a>
+          <a class="btn btn-primary" href="/postulation/{{id_annunce}}">Postulation/s</a>
           
         </div>
     </div>
